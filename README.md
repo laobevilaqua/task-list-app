@@ -1,4 +1,4 @@
-# horses_run_app
+# Task List
 
 First project flutter
 
@@ -7,6 +7,10 @@ First project flutter
 
 ***Command Run Project***
 `flutter run`
+
+***website that autogenerate models using json***
+[code generator for models](https://javiercbk.github.io/json_to_dart/)
+
 
 ## Getting Started
 
