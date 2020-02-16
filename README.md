@@ -1,6 +1,12 @@
 # horses_run_app
 
-First project flutter 
+First project flutter
+
+***Get Dependencies Command***
+`flutter packages get`
+
+***Command Run Project***
+`flutter run`
 
 ## Getting Started
 
