@@ -33,11 +33,27 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final TextEditingController newTaskCtrl = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Task List'),
+        title: TextFormField(
+          controller: newTaskCtrl,
+          // helps the user by giving keyboard shortcuts like @, or words
+          keyboardType: TextInputType.text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+          ),
+          decoration: InputDecoration(
+            labelText: 'Nova Tarefa',
+            labelStyle: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
       ),
       body: ListView.builder(
         itemCount: widget.items.length,
