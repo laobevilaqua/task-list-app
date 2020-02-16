@@ -11,7 +11,7 @@ class App extends StatelessWidget {
       title: 'Task List',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.orange,
       ),
       home: HomePage(),
     );
@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: ListView.builder(
         itemCount: widget.items.length,
-        //
+        // it is not necessary to type the parameters. Ex itemBuilder: (ctxt, index)
         itemBuilder: (BuildContext ctxt, int index) {
           // final equivalent const in javascript
           final item = widget.items[index];
@@ -50,8 +50,13 @@ class _HomePageState extends State<HomePage> {
             title: Text(item.title),
             key: Key(item.title),
             value: item.done,
+            activeColor: Colors.orange,
             onChanged: (value) {
-              item.done = value;
+              // works only on statefulwidget.
+              // for update screen
+              setState(() {
+                item.done = value;
+              });
             },
           );
         },
