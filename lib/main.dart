@@ -35,6 +35,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final TextEditingController newTaskCtrl = TextEditingController();
 
+  void add() {
+    setState(() {
+      if (newTaskCtrl.text.isEmpty) return;
+      widget.items.add(Item(title: newTaskCtrl.text, done: false));
+      newTaskCtrl.clear();
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,6 +84,11 @@ class _HomePageState extends State<HomePage> {
           );
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: add,
+        child: Icon(Icons.add),
+        backgroundColor: Colors.pink,
+        ),
     );
   }
 }
