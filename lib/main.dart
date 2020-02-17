@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'models/item.dart';
 
@@ -23,9 +26,6 @@ class HomePage extends StatefulWidget {
 
   HomePage() {
     items = [];
-    items.add(Item(title: 'Criar Navbar', done: true));
-    items.add(Item(title: 'Criar uma lista de checkbox locada', done: true));
-    items.add(Item(title: 'Integrar mudanças', done: false));
   }
 
   @override
@@ -39,14 +39,42 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       if (newTaskCtrl.text.isEmpty) return;
       widget.items.add(Item(title: newTaskCtrl.text, done: false));
+      
       newTaskCtrl.clear();
+      
+      save();
     });
   }
+  
   void remove(int index) {
     setState(() {
       widget.items.removeAt(index);
+      save();
     });
   }
+  
+  Future load() async {
+    var prefs = await SharedPreferences.getInstance();
+    var data = prefs.getString('data');
+
+    if (data != null) {
+      Iterable decoded = jsonDecode(data);
+      List<Item> result = decoded.map((x) => Item.fromJson(x)).toList();
+      setState(() {
+        widget.items = result;
+      });
+    }
+  }
+
+  _HomePageState() {
+    load();
+  }
+ 
+ save() async {
+    var prefs = await SharedPreferences.getInstance();
+    await prefs.setString('data', jsonEncode(widget.items));
+ }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,6 +121,7 @@ class _HomePageState extends State<HomePage> {
                 // for update screen
                 setState(() {
                   item.done = value;
+                  save();
                 });
               },
             )
